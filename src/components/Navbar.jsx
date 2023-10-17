@@ -93,7 +93,7 @@ export const NavBar = () => {
                 {showDropdown && (
                   <div
                     className="absolute right-0 p-2 w-20 bg-white border rounded shadow-lg"
-                    style={{ zIndex: 100}}
+                    style={{ zIndex: 100 }}
                   >
                     <ul>
                       <li>
