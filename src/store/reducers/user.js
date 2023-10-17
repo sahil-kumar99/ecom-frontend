@@ -3,6 +3,7 @@ import { SIGNUP, LOGIN } from "../actions/user";
 import toast from "react-hot-toast";
 
 const initialState = {
+  signupError: "",
   signupStatus: false,
   loginStatus: false,
   logoutStatus: false,
@@ -29,11 +30,12 @@ const user = createSlice({
         state.error = "";
       })
       .addCase(SIGNUP.fulfilled, (state, { payload }) => {
-        console.log("----create paylod---", payload);
         if (payload.status) {
           state.signupStatus = true;
           toast.success(payload.message);
+          return;
         }
+        toast.error(payload.response.data.message);
       })
       .addCase(SIGNUP.rejected, (state, { error }) => {
         state.error = error.message;
@@ -42,12 +44,13 @@ const user = createSlice({
         state.error = "";
       })
       .addCase(LOGIN.fulfilled, (state, { payload }) => {
-        console.log("----login paylod---", payload);
         if (payload.status) {
           state.loginStatus = true;
           localStorage.setItem("user", JSON.stringify(payload.user));
           toast.success(payload.message);
+          return;
         }
+        toast.error(payload.response.data.message);
       })
       .addCase(LOGIN.rejected, (state, { error }) => {
         state.error = error.message;

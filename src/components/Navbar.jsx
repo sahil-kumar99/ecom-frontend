@@ -22,9 +22,9 @@ export const NavBar = () => {
       <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
-            <a href="/">
+            <span href="/">
               <h2 className="text-2xl font-bold">Ecom</h2>
-            </a>
+            </span>
             <div className="md:hidden">
               <button
                 className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
@@ -71,10 +71,10 @@ export const NavBar = () => {
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               <li className="text-black hover:text-blue-600">
-                <a href="/">Home</a>
+                <span href="/">Home</span>
               </li>
               <li className="text-black hover:text-blue-600">
-                <a href="#">Products</a>
+                <span href="#">Products</span>
               </li>
               <li
                 className="text-black hover:text-blue-600 relative"
@@ -91,7 +91,10 @@ export const NavBar = () => {
                   <BiSolidUserCircle />
                 </svg>
                 {showDropdown && (
-                  <div className="absolute right-0 p-2 w-20 bg-white border rounded shadow-lg">
+                  <div
+                    className="absolute right-0 p-2 w-20 bg-white border rounded shadow-lg"
+                    style={{ zIndex: 100}}
+                  >
                     <ul>
                       <li>
                         <button onClick={handleLogout}>Logout</button>

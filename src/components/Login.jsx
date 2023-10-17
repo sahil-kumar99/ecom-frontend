@@ -28,7 +28,6 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("login data-----:", formData);
     dispatch(LOGIN(formData));
     if (data?.user?.loginStatus) {
       navigate("/");

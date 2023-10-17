@@ -14,7 +14,6 @@ function Signup() {
   });
 
   useEffect(() => {
-    console.log("---useeffect data---", data);
     if (data?.signupStatus) {
       navigate("/login");
     }
@@ -30,7 +29,6 @@ function Signup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
     dispatch(SIGNUP(formData));
   };
 
