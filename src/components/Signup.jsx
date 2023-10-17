@@ -35,7 +35,7 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-sky-200">
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-semibold text-center mb-4">
           Create an account
@@ -90,9 +90,14 @@ function Signup() {
           </div>
           <p className="text-gray-500 text-sm text-center">
             Already have an account?
-            <a href="/login" className="text-blue-500 hover:underline">
+            <button
+              onClick={() => {
+                navigate("/login");
+              }}
+              className="text-blue-500 hover:underline"
+            >
               LogIn
-            </a>
+            </button>
           </p>
         </form>
       </div>

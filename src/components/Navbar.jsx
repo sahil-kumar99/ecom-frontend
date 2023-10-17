@@ -14,6 +14,7 @@ export const NavBar = () => {
   const handleLogout = () => {
     dispatch(LOGOUT());
     localStorage.removeItem("user");
+    localStorage.removeItem("persist:user");
     navigate("/login");
   };
   return (
@@ -69,14 +70,14 @@ export const NavBar = () => {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li className="text-gray-600 hover:text-blue-600">
+              <li className="text-black hover:text-blue-600">
                 <a href="/">Home</a>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <a href="#">Blog</a>
+              <li className="text-black hover:text-blue-600">
+                <a href="#">Products</a>
               </li>
               <li
-                className="text-gray-600 hover:text-blue-600 relative"
+                className="text-black hover:text-blue-600 relative"
                 onMouseEnter={() => setShowDropdown(true)}
                 onMouseLeave={() => setShowDropdown(false)}
               >

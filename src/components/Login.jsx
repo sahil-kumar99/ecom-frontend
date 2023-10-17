@@ -35,10 +35,10 @@ function Login() {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-sky-200">
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-semibold text-center mb-4">
-          Log In to store
+          Log In to account
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -79,9 +79,14 @@ function Login() {
           </div>
           <p className="text-gray-500 text-sm text-center">
             Not have an account?
-            <a href="/signup" className="text-blue-500 hover:underline">
+            <button
+              onClick={() => {
+                navigate("/signup");
+              }}
+              className="text-blue-500 hover:underline"
+            >
               Signup
-            </a>
+            </button>
           </p>
         </form>
       </div>

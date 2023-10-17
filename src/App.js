@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { store } from "./store";
+import { store, persistor } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import Login from "./components/Login";
@@ -12,11 +13,13 @@ function App() {
     <BrowserRouter>
       <Toaster />
       <Provider store={store}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
+        <PersistGate persistor={persistor}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   );
