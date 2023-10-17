@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "./Card";
+import { useDispatch } from "react-redux";
+import { GETPRODUCT } from "../store/actions/product";
 
 const TrendingProduct = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(GETPRODUCT());
+  }, []);
+
   return (
     <div className="container mx-auto p-4">
       <div className="font-bold text-xl mb-2 text-center ">

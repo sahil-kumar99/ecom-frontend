@@ -15,9 +15,6 @@ const Card = () => {
         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
           Price: $XX.XX
         </span>
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          Rating: X.X
-        </span>
       </div>
     </div>
   );
