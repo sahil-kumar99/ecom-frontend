@@ -1,10 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GETPRODUCT } from "../store/actions/product";
 
 const TrendingProduct = () => {
   const dispatch = useDispatch();
+  const data = useSelector((state) => state.product);
+  const wishlistData = useSelector((state) => state?.user?.wishlist);
+  const [trendingProducts, setTrendingProducts] = useState([]);
+  useEffect(() => {
+    setTrendingProducts([...data?.products]);
+  }, [data?.products]);
 
   useEffect(() => {
     dispatch(GETPRODUCT());
@@ -18,18 +24,17 @@ const TrendingProduct = () => {
         </span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-5">
-        <div className="w-full hover:shadow-md hover:shadow-sky-400 hover:bg-white transition duration-300 ease-in-out">
-          <Card />
-        </div>
-        <div className="w-full hover:shadow-md hover:shadow-sky-400 hover:bg-white transition duration-300 ease-in-out">
-          <Card />
-        </div>
-        <div className="w-full hover:shadow-md hover:shadow-sky-400 hover:bg-white transition duration-300 ease-in-out">
-          <Card />
-        </div>
-        <div className="w-full hover:shadow-md hover:shadow-sky-400 hover:bg-white transition duration-300 ease-in-out">
-          <Card />
-        </div>
+        {trendingProducts?.map((item, idx) => {
+          const isIdIncluded = wishlistData.some((itm) => itm._id === item._id);
+          return (
+            <div
+              key={idx}
+              className="w-full hover:shadow-md hover:shadow-sky-400 hover:bg-white transition duration-300 ease-in-out"
+            >
+              <Card item={item} isWish={isIdIncluded} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
