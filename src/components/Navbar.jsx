@@ -14,9 +14,7 @@ export const NavBar = () => {
   const [navbar, setNavbar] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  useEffect(() => {
-    console.log("----loggg--", userData);
-  }, [userData]);
+  useEffect(() => {}, [userData]);
   useEffect(() => {
     dispatch(CARTSIZE());
   }, []);
@@ -100,7 +98,9 @@ export const NavBar = () => {
                       navigate("/cart");
                     }}
                   />
-                  <span className="badge font-extrabold">{userData.cartSize}</span>
+                  <span className="badge font-extrabold">
+                    {userData.cartSize}
+                  </span>
                 </li>
 
                 <li
@@ -111,13 +111,13 @@ export const NavBar = () => {
                   <BiSolidUserCircle size={25} />
                   {showDropdown && (
                     <div
-                      className="absolute right-0 w-20 bg-white border rounded shadow-lg"
+                      className="absolute right-0 w-25 bg-white border rounded shadow-lg"
                       style={{ zIndex: 100 }}
                     >
                       <ul>
-                        <li className="m-2">
-                          <button onClick={handleShowWishlist}>wishlist</button>
-                        </li>
+                        {/* <li className="m-2">
+                          <button onClick={handleShowWishlist}>profile</button>
+                        </li> */}
                         <li className="m-2">
                           <button onClick={handleLogout}>Logout</button>
                         </li>
