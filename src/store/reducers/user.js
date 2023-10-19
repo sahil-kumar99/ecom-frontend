@@ -4,6 +4,8 @@ import {
   LOGIN,
   ADDTOWISHLIST,
   REMOVEFROMWISHLIST,
+  ADDTOCART,
+  REMOVEFROMCART,
 } from "../actions/user";
 import toast from "react-hot-toast";
 
@@ -13,6 +15,8 @@ const initialState = {
   loginStatus: false,
   logoutStatus: false,
   wishlist: [],
+  cart: [],
+  cartSize: null,
 };
 
 const user = createSlice({
@@ -21,6 +25,8 @@ const user = createSlice({
   reducers: {
     LOGOUT: (state) => {
       state.wishlist = [];
+      state.cart = [];
+      state.cartSize = null;
       state.logoutStatus = true;
       state.loginStatus = false;
       state.signupStatus = false;
@@ -32,6 +38,9 @@ const user = createSlice({
       state.wishlist = state.wishlist.filter(
         (item) => item._id !== action.payload
       );
+    },
+    CARTSIZE: (state) => {
+      state.cartSize = state.cart.length;
     },
   },
   extraReducers: (builder) => {
@@ -61,6 +70,8 @@ const user = createSlice({
           const { user } = payload?.user;
           localStorage.setItem("user", JSON.stringify(payload.user));
           state.wishlist = [...user?.wishlist];
+          state.cart = [...user?.cart];
+          state.cartSize = user?.cart.length;
           toast.success(payload.message);
           return;
         }
@@ -92,6 +103,36 @@ const user = createSlice({
       })
       .addCase(REMOVEFROMWISHLIST.rejected, (state, { error }) => {
         state.error = error.message;
+      })
+      .addCase(ADDTOCART.pending, (state) => {
+        state.error = "";
+      })
+      .addCase(ADDTOCART.fulfilled, (state, { payload }) => {
+        if (payload.status) {
+          state.cart = [...state.cart, payload?.product];
+          state.cartSize = state.cart.length;
+          toast.success(payload.message);
+        }
+      })
+      .addCase(ADDTOCART.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(REMOVEFROMCART.pending, (state) => {
+        state.error = "";
+      })
+      .addCase(REMOVEFROMCART.fulfilled, (state, { payload }) => {
+        if (payload.status) {
+          state.cart = state.cart.filter(
+            (item) => item._id !== payload.product._id
+          );
+          state.cartSize = state.cart.length;
+          toast.success(payload.message);
+          return;
+        }
+        toast.error(payload.message);
+      })
+      .addCase(REMOVEFROMCART.rejected, (state, { error }) => {
+        state.error = error.message;
       });
   },
 });
@@ -99,4 +140,5 @@ const user = createSlice({
 const userReducer = user.reducer;
 
 export { userReducer };
-export const { LOGOUT, UPDATEWISHLIST, UPDATEWISHREMOVE } = user.actions;
+export const { LOGOUT, UPDATEWISHLIST, UPDATEWISHREMOVE, CARTSIZE } =
+  user.actions;

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN } from "../store/actions/user";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +9,7 @@ function Login() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.user);
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,6 +17,7 @@ function Login() {
 
   useEffect(() => {
     if (data?.loginStatus) {
+      setLoader(false);
       navigate("/");
     }
   }, [data]);
@@ -28,11 +32,13 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     dispatch(LOGIN(formData));
     if (data?.user?.loginStatus) {
       navigate("/");
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-sky-200">
       <div className="bg-white p-8 rounded shadow-md w-96">
@@ -71,13 +77,14 @@ function Login() {
           <div className="mb-6">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none"
+              className="w-full bg-sky-500 text-white p-2 rounded hover:bg-sky-400 focus:outline-none"
             >
-              Login
+              Login &nbsp;
+              {loader && <FontAwesomeIcon icon={faSpinner} spin />}
             </button>
           </div>
           <p className="text-gray-500 text-sm text-center">
-            Not have an account?
+            Not have an account? &nbsp;
             <button
               onClick={() => {
                 navigate("/signup");

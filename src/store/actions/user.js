@@ -63,4 +63,38 @@ const REMOVEFROMWISHLIST = createAsyncThunk(
   }
 );
 
-export { SIGNUP, LOGIN, ADDTOWISHLIST, REMOVEFROMWISHLIST };
+const ADDTOCART = createAsyncThunk("ADD_TO_CART", async (prodId) => {
+  try {
+    const response = await axios.post(
+      // "http://localhost:8000/cart/addCart",
+      "https://ecom-server-v9a4.onrender.com/cart/addCart",
+      { productId: prodId },
+      config
+    );
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+});
+const REMOVEFROMCART = createAsyncThunk("REMOVE_FROM_CART", async (prodId) => {
+  try {
+    const response = await axios.post(
+      // "http://localhost:8000/cart/removeCart",
+      "https://ecom-server-v9a4.onrender.com/cart/removeCart",
+      { productId: prodId },
+      config
+    );
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+});
+
+export {
+  SIGNUP,
+  LOGIN,
+  ADDTOWISHLIST,
+  REMOVEFROMWISHLIST,
+  ADDTOCART,
+  REMOVEFROMCART,
+};
