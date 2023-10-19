@@ -29,7 +29,9 @@ const user = createSlice({
       state.wishlist = [...state.wishlist, action.payload];
     },
     UPDATEWISHREMOVE: (state, action) => {
-      state.wishlist = [...state.wishlist.splice(0, action.payload)];
+      state.wishlist = state.wishlist.filter(
+        (item) => item._id !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {
@@ -83,7 +85,6 @@ const user = createSlice({
       })
       .addCase(REMOVEFROMWISHLIST.fulfilled, (state, { payload }) => {
         if (payload.status) {
-          state.updateWishlist = true;
           toast.success(payload.message);
           return;
         }

@@ -10,7 +10,8 @@ const config = {
 const SIGNUP = createAsyncThunk("SIGNUP_USER", async (signupData) => {
   try {
     const response = await axios.post(
-      "http://localhost:8000/user/signup",
+      // "http://localhost:8000/user/signup",
+      "https://ecom-server-v9a4.onrender.com/user/signup",
       signupData
     );
     return response.data;
@@ -22,8 +23,8 @@ const SIGNUP = createAsyncThunk("SIGNUP_USER", async (signupData) => {
 const LOGIN = createAsyncThunk("LOGIN_USER", async (loginData) => {
   try {
     const response = await axios.post(
-      // "https://ecom-server-v9a4.onrender.com/user/login",
-      "http://localhost:8000/user/login",
+      "https://ecom-server-v9a4.onrender.com/user/login",
+      // "http://localhost:8000/user/login",
       loginData
     );
     return response.data;
@@ -35,7 +36,8 @@ const LOGIN = createAsyncThunk("LOGIN_USER", async (loginData) => {
 const ADDTOWISHLIST = createAsyncThunk("ADD_TO_WISHLIST", async (prodId) => {
   try {
     const response = await axios.post(
-      "http://localhost:8000/wishlist/add",
+      // "http://localhost:8000/wishlist/add",
+      "https://ecom-server-v9a4.onrender.com/wishlist/add",
       { productId: prodId },
       config
     );
@@ -49,7 +51,8 @@ const REMOVEFROMWISHLIST = createAsyncThunk(
   async (prodId) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/wishlist/remove",
+        // "http://localhost:8000/wishlist/remove",
+        "https://ecom-server-v9a4.onrender.com/wishlist/remove",
         { productId: prodId },
         config
       );

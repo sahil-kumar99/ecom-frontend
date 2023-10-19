@@ -1,15 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  GETPRODUCT,
-  ADDTOWISHLIST,
-  REMOVEFROMWISHLIST,
-} from "../actions/product";
+import { GETPRODUCT } from "../actions/product";
 import toast from "react-hot-toast";
 
 const initialState = {
   products: [],
   error: "",
-  // updateWishlist: false,
 };
 
 const product = createSlice({
