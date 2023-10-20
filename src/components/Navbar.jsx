@@ -6,6 +6,7 @@ import { CARTSIZE, LOGOUT } from "../store/reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import CartBadge from "./CartBadge";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,9 @@ export const NavBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {}, [userData]);
-  useEffect(() => {
-    dispatch(CARTSIZE());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(CARTSIZE());
+  // }, []);
   const handleShowWishlist = () => {};
 
   const handleLogout = () => {
@@ -98,9 +99,10 @@ export const NavBar = () => {
                       navigate("/cart");
                     }}
                   />
-                  <span className="badge font-extrabold">
+                  {/* <span className="badge font-extrabold">
                     {userData.cartSize}
-                  </span>
+                  </span> */}
+                  <CartBadge />
                 </li>
 
                 <li
@@ -115,9 +117,11 @@ export const NavBar = () => {
                       style={{ zIndex: 100 }}
                     >
                       <ul>
-                        {/* <li className="m-2">
-                          <button onClick={handleShowWishlist}>profile</button>
-                        </li> */}
+                        <li className="m-2">
+                          <button onClick={() => navigate("/order")}>
+                            Orders
+                          </button>
+                        </li>
                         <li className="m-2">
                           <button onClick={handleLogout}>Logout</button>
                         </li>

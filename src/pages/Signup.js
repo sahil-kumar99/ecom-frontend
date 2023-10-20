@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { SIGNUP } from "../store/actions/user";
+import { LOADER } from "../store/reducers/user";
 
 function Signup() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.user);
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -32,8 +32,8 @@ function Signup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLoader(true);
     dispatch(SIGNUP(formData));
+    dispatch(LOADER());
   };
 
   return (
@@ -88,7 +88,9 @@ function Signup() {
               className="w-full bg-sky-500 text-white p-2 rounded hover:bg-sky-400 focus:outline-none"
             >
               Signup &nbsp;
-              {loader && <FontAwesomeIcon icon={faSpinner} spin />}
+              {data?.authButtonLoader && (
+                <FontAwesomeIcon icon={faSpinner} spin />
+              )}
             </button>
           </div>
           <p className="text-gray-500 text-sm text-center">

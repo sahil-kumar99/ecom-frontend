@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import { NavBar } from "./components/Navbar";
 import Footer from "./components/Footer";
+import Order from "./pages/Order";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/order" element={<Order />} />
           </Routes>
           <Footer />
         </PersistGate>

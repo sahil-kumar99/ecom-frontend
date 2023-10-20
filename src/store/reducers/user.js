@@ -17,6 +17,7 @@ const initialState = {
   wishlist: [],
   cart: [],
   cartSize: null,
+  authButtonLoader: true,
 };
 
 const user = createSlice({
@@ -42,6 +43,13 @@ const user = createSlice({
     CARTSIZE: (state) => {
       state.cartSize = state.cart.length;
     },
+    CLEARCART: (state) => {
+      state.cart = [];
+      state.cartSize = state.cart.length;
+    },
+    LOADER: (state) => {
+      state.authButtonLoader = true;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,6 +62,7 @@ const user = createSlice({
           toast.success(payload.message);
           return;
         }
+        state.authButtonLoader = false;
         toast.error(payload.response.data.message);
       })
       .addCase(SIGNUP.rejected, (state, { error }) => {
@@ -72,10 +81,12 @@ const user = createSlice({
           state.wishlist = [...user?.wishlist];
           state.cart = [...user?.cart];
           state.cartSize = user?.cart.length;
+          state.authButtonLoader = false;
           toast.success(payload.message);
           return;
         }
         toast.error(payload.response.data.message);
+        state.authButtonLoader = false;
       })
       .addCase(LOGIN.rejected, (state, { error }) => {
         state.error = error.message;
@@ -108,6 +119,7 @@ const user = createSlice({
         state.error = "";
       })
       .addCase(ADDTOCART.fulfilled, (state, { payload }) => {
+        console.log('---add to cart paylad---', payload);
         if (payload.status) {
           state.cart = [...state.cart, payload?.product];
           state.cartSize = state.cart.length;
@@ -140,5 +152,11 @@ const user = createSlice({
 const userReducer = user.reducer;
 
 export { userReducer };
-export const { LOGOUT, UPDATEWISHLIST, UPDATEWISHREMOVE, CARTSIZE } =
-  user.actions;
+export const {
+  LOGOUT,
+  UPDATEWISHLIST,
+  UPDATEWISHREMOVE,
+  CARTSIZE,
+  CLEARCART,
+  LOADER,
+} = user.actions;

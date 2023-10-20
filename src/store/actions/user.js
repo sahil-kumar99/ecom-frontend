@@ -7,6 +7,7 @@ const config = {
     Authorization: `Bearer ${user?.token}`,
   },
 };
+console.log("---user action config--->>>", config);
 const SIGNUP = createAsyncThunk("SIGNUP_USER", async (signupData) => {
   try {
     const response = await axios.post(
@@ -23,8 +24,8 @@ const SIGNUP = createAsyncThunk("SIGNUP_USER", async (signupData) => {
 const LOGIN = createAsyncThunk("LOGIN_USER", async (loginData) => {
   try {
     const response = await axios.post(
-      "https://ecom-server-v9a4.onrender.com/user/login",
       // "http://localhost:8000/user/login",
+      "https://ecom-server-v9a4.onrender.com/user/login",
       loginData
     );
     return response.data;

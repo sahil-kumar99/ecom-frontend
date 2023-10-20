@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { GETPRODUCT } from "../store/actions/product";
+import SectionHeading from "./SectionHeading";
 
 const TrendingProduct = () => {
   const dispatch = useDispatch();
@@ -18,11 +19,7 @@ const TrendingProduct = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="font-bold text-xl mb-2 text-center ">
-        <span className="border-b-8 border-sky-400 border-r-2 border-l-2 border-t-2 p-1">
-          Trending Products
-        </span>
-      </div>
+      <SectionHeading text={"Trending Products"} />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-5">
         {trendingProducts?.map((item, idx) => {
           const isIdIncluded = wishlist.some((itm) => itm._id === item._id);

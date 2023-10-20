@@ -4,12 +4,12 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN } from "../store/actions/user";
 import { useNavigate } from "react-router-dom";
+import { LOADER } from "../store/reducers/user";
 
 function Login() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.user);
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,7 +17,6 @@ function Login() {
 
   useEffect(() => {
     if (data?.loginStatus) {
-      setLoader(false);
       navigate("/");
     }
   }, [data]);
@@ -32,8 +31,8 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoader(true);
     dispatch(LOGIN(formData));
+    dispatch(LOADER());
     if (data?.user?.loginStatus) {
       navigate("/");
     }
@@ -80,7 +79,9 @@ function Login() {
               className="w-full bg-sky-500 text-white p-2 rounded hover:bg-sky-400 focus:outline-none"
             >
               Login &nbsp;
-              {loader && <FontAwesomeIcon icon={faSpinner} spin />}
+              {data?.authButtonLoader && (
+                <FontAwesomeIcon icon={faSpinner} spin />
+              )}
             </button>
           </div>
           <p className="text-gray-500 text-sm text-center">
