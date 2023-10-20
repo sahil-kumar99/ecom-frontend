@@ -13,7 +13,7 @@ const BUYPRODUCT = createAsyncThunk(
   async ({ cart, totalAmount }) => {
     try {
       const response = await axios.post(
-        "https://ecom-server-v9a4.onrender.com/product/get",
+        "https://ecom-server-v9a4.onrender.com/order/createOrder",
         // "http://localhost:8000/order/createOrder",
         { products: cart, totalAmount },
         config
@@ -28,8 +28,8 @@ const BUYPRODUCT = createAsyncThunk(
 const GETORDERS = createAsyncThunk("GET_ORDERS", async () => {
   try {
     const response = await axios.post(
-      "https://ecom-server-v9a4.onrender.com/product/get",
-    //   "http://localhost:8000/order/getOrders",
+      "https://ecom-server-v9a4.onrender.com/order/getOrders",
+      //   "http://localhost:8000/order/getOrders",
       {},
       config
     );
