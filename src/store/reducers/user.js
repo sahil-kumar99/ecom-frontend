@@ -17,7 +17,7 @@ const initialState = {
   wishlist: [],
   cart: [],
   cartSize: null,
-  authButtonLoader: true,
+  authButtonLoader: false,
 };
 
 const user = createSlice({
