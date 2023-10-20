@@ -1,13 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getAuthorizationConfig } from "../../helper";
 
-const user = JSON.parse(localStorage.getItem("user")) || "";
-const config = {
-  headers: {
-    Authorization: `Bearer ${user?.token}`,
-  },
-};
-console.log("---user action config--->>>", config);
 const SIGNUP = createAsyncThunk("SIGNUP_USER", async (signupData) => {
   try {
     const response = await axios.post(
@@ -36,6 +30,7 @@ const LOGIN = createAsyncThunk("LOGIN_USER", async (loginData) => {
 
 const ADDTOWISHLIST = createAsyncThunk("ADD_TO_WISHLIST", async (prodId) => {
   try {
+    const config = getAuthorizationConfig();
     const response = await axios.post(
       // "http://localhost:8000/wishlist/add",
       "https://ecom-server-v9a4.onrender.com/wishlist/add",
@@ -51,6 +46,7 @@ const REMOVEFROMWISHLIST = createAsyncThunk(
   "REMOVE_FROM_WISHLIST",
   async (prodId) => {
     try {
+      const config = getAuthorizationConfig();
       const response = await axios.post(
         // "http://localhost:8000/wishlist/remove",
         "https://ecom-server-v9a4.onrender.com/wishlist/remove",
@@ -66,6 +62,7 @@ const REMOVEFROMWISHLIST = createAsyncThunk(
 
 const ADDTOCART = createAsyncThunk("ADD_TO_CART", async (prodId) => {
   try {
+    const config = getAuthorizationConfig();
     const response = await axios.post(
       // "http://localhost:8000/cart/addCart",
       "https://ecom-server-v9a4.onrender.com/cart/addCart",
@@ -79,6 +76,7 @@ const ADDTOCART = createAsyncThunk("ADD_TO_CART", async (prodId) => {
 });
 const REMOVEFROMCART = createAsyncThunk("REMOVE_FROM_CART", async (prodId) => {
   try {
+    const config = getAuthorizationConfig();
     const response = await axios.post(
       // "http://localhost:8000/cart/removeCart",
       "https://ecom-server-v9a4.onrender.com/cart/removeCart",
