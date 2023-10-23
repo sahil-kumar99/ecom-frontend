@@ -1,4 +1,7 @@
-
+.custom-position {
+  position: absolute;
+  bottom: 198px;
+}
 /* -----------pagination-------- */
 .pagination {
   display: flex;
@@ -35,8 +38,8 @@
 /* -----------pagination-------- */
 
 @media (max-width: 767px) {
-  .sm-badge{
-    position: 'absolute';
+  .sm-badge {
+    position: "absolute";
     top: 142px;
   }
 }

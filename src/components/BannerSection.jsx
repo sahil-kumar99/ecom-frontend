@@ -3,7 +3,7 @@ import React from "react";
 const BannerSection = () => {
   return (
     <div
-      className="bg-cover bg-center h-96 flex items-center justify-center text-white relative"
+      className="bg-cover bg-center h-80 flex items-center justify-center text-white relative"
       style={{ backgroundImage: "url('https://picsum.photos/100/200')" }}
     >
       <div className="absolute inset-0 bg-black opacity-50"></div>

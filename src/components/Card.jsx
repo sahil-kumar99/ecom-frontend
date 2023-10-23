@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 // import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { RiDeleteBin2Fill } from "react-icons/ri";
@@ -53,6 +53,12 @@ const Card = ({ item, isWish, isCart, cart }) => {
             size={20}
           />
         )} */}
+      </div>
+      <div className="w-full flex justify-center">
+        <img
+          className="transform transition-transform hover:scale-110"
+          src={item.url}
+        />
       </div>
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{item.title}</div>

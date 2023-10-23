@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
 import { GETPRODUCT } from "../store/actions/product";
 import SectionHeading from "./SectionHeading";
+import Search from "./Search";
 
 const TrendingProduct = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const TrendingProduct = () => {
   return (
     <div className="container mx-auto p-4">
       <SectionHeading text={"Trending Products"} />
+      <Search />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-5">
         {currentItems?.map((item, idx) => {
           const isIdIncluded = wishlist.some((itm) => itm._id === item._id);
