@@ -18,12 +18,16 @@ const initialState = {
   cart: [],
   cartSize: null,
   authButtonLoader: false,
+  buttonDisable: false,
 };
 
 const user = createSlice({
   name: "user",
   initialState,
   reducers: {
+    BUTTONDISABLE: (state) => {
+      state.buttonDisable = true;
+    },
     LOGOUT: (state) => {
       state.wishlist = [];
       state.cart = [];
@@ -61,10 +65,12 @@ const user = createSlice({
           state.signupStatus = true;
           toast.success(payload.message);
           state.authButtonLoader = false;
+          state.buttonDisable = false;
           return;
         }
-        state.authButtonLoader = false;
         toast.error(payload.response.data.message);
+        state.authButtonLoader = false;
+        state.buttonDisable = false;
       })
       .addCase(SIGNUP.rejected, (state, { error }) => {
         state.error = error.message;
@@ -84,9 +90,11 @@ const user = createSlice({
           state.cartSize = user?.cart.length;
           state.authButtonLoader = false;
           toast.success(payload.message);
+          state.buttonDisable = false;
           return;
         }
         toast.error(payload.response.data.message);
+        state.buttonDisable = false;
         state.authButtonLoader = false;
       })
       .addCase(LOGIN.rejected, (state, { error }) => {
@@ -160,4 +168,5 @@ export const {
   CARTSIZE,
   CLEARCART,
   LOADER,
+  BUTTONDISABLE,
 } = user.actions;

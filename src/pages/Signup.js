@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { SIGNUP } from "../store/actions/user";
-import { LOADER } from "../store/reducers/user";
+import { BUTTONDISABLE, LOADER } from "../store/reducers/user";
 
 function Signup() {
   const dispatch = useDispatch();
@@ -34,6 +34,7 @@ function Signup() {
     event.preventDefault();
     dispatch(SIGNUP(formData));
     dispatch(LOADER());
+    dispatch(BUTTONDISABLE());
   };
 
   return (
@@ -84,6 +85,7 @@ function Signup() {
           </div>
           <div className="mb-6">
             <button
+              disabled={data?.buttonDisable}
               type="submit"
               className="w-full bg-sky-500 text-white p-2 rounded hover:bg-sky-400 focus:outline-none"
             >

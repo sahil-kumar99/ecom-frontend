@@ -4,7 +4,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN } from "../store/actions/user";
 import { useNavigate } from "react-router-dom";
-import { LOADER } from "../store/reducers/user";
+import { BUTTONDISABLE, LOADER } from "../store/reducers/user";
 
 function Login() {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ function Login() {
     e.preventDefault();
     dispatch(LOGIN(formData));
     dispatch(LOADER());
+    dispatch(BUTTONDISABLE());
     if (data?.user?.loginStatus) {
       navigate("/");
     }
@@ -75,6 +76,7 @@ function Login() {
           </div>
           <div className="mb-6">
             <button
+              disabled={data?.buttonDisable}
               type="submit"
               className="w-full bg-sky-500 text-white p-2 rounded hover:bg-sky-400 focus:outline-none"
             >
