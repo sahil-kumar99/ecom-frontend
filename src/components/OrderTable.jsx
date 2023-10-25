@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BUYPRODUCT } from "../store/actions/order";
+import { BUYPRODUCT, CREATEPAYMENT } from "../store/actions/order";
 import { useNavigate } from "react-router-dom";
-import { CLEARCART } from "../store/reducers/user";
+import { CLEARCART, LOADER } from "../store/reducers/user";
 import { CLEARORDER } from "../store/reducers/order";
+import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const OrderTable = () => {
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state?.user);
@@ -14,17 +18,93 @@ const OrderTable = () => {
     return accumulator + currentItem.price;
   }, 0);
 
+  const seting_dsts = useRef(false);
+
   const handleOrder = () => {
+    setLoader(true);
+    seting_dsts.current = false;
     dispatch(BUYPRODUCT({ cart: userData?.cart, totalAmount: totalPrice }));
   };
 
   useEffect(() => {
+    console.log("---useeffect inside order", orderData?.orderObject);
+    if (seting_dsts.current == false) {
+      if (orderData?.orderObject) {
+        const { user } = JSON.parse(localStorage.getItem("user"));
+        console.log("---useeffect>>>>>>>>>>>>", orderData?.orderObject);
+        const options = {
+          key: "rzp_test_rcJDOMsASBNgQX",
+          amount: orderData?.orderObject?.amount,
+          currency: orderData?.orderObject?.currency,
+          order_id: orderData?.orderObject?.id,
+          name: "Ecom Corp",
+          description: "Test Transaction",
+          handler: async (response) => {
+            console.log("---order response---", response);
+            const {
+              razorpay_order_id,
+              razorpay_payment_id,
+              razorpay_signature,
+            } = response;
+
+            // save payment in db
+            dispatch(
+              CREATEPAYMENT({
+                order_id: localStorage.getItem("orderId"),
+                razorpay_order_id,
+                razorpay_payment_id,
+                razorpay_signature,
+              })
+            );
+            // toast.success(
+            //   `Payment successful. Payment ID: ${response.razorpay_payment_id}`
+            // );
+            // // redirect or perform other actions here after a successful payment.
+            setLoader(false);
+            dispatch(CLEARCART());
+            // dispatch(CLEARORDER());
+            // navigate("/");
+          },
+          modal: {
+            escape: false,
+            ondismiss: function () {
+              setLoader(false);
+            },
+          },
+          prefill: {
+            name: user.username,
+            email: user.email,
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#38BDF8",
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.on("payment.failed", function (response) {
+          toast.error(`Payment failed: ${response.error.description}`);
+        });
+        rzp.open();
+        seting_dsts.current = true;
+      }
+    }
+
+    // if (orderData?.orderSuccess) {
+    //   navigate("/");
+    // }
+  }, [orderData]);
+
+  useEffect(() => {
+    console.log('---order sucess--');
     if (orderData?.orderSuccess) {
-      dispatch(CLEARCART());
+      // dispatch(CLEARCART());
       dispatch(CLEARORDER());
       navigate("/");
     }
-  }, [orderData?.orderSuccess]);
+  }, [orderData]);
   return (
     <div className="text-center">
       <table className="border-collapse border m-auto mt-5">
@@ -46,6 +126,12 @@ const OrderTable = () => {
         onClick={handleOrder}
       >
         Buy
+        {loader && (
+          <>
+            &nbsp;
+            <FontAwesomeIcon icon={faSpinner} spin />
+          </>
+        )}
       </button>
     </div>
   );

@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import debounce from "lodash/debounce";
+import { useDispatch } from "react-redux";
+import { SEARCHPRODUCT } from "../store/actions/product";
 
 const Search = () => {
-  //   const [searchQuery, setSearchQuery] = useState("");
-  //   const handleSearch = (e) => {
-  //     setSearchQuery(e.target.value.trim());
-  //   };
+  const dispatch = useDispatch();
 
-  function handleSearch(query) {
-    console.log("--query--", query);
-  }
+  const handleSearch = (query) => {
+    dispatch(SEARCHPRODUCT(query.trim()));
+  };
 
-  const debouncedHandleSearch = debounce(handleSearch, 1000);
+  const debouncedHandleSearch = debounce(handleSearch, 200);
   return (
     <div className="custom-position">
       <input

@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GETPRODUCT } from "../actions/product";
+import { GETPRODUCT, SEARCHPRODUCT } from "../actions/product";
 import toast from "react-hot-toast";
 
 const initialState = {
   products: [],
   error: "",
+  searchResults: [],
 };
 
 const product = createSlice({
@@ -22,6 +23,17 @@ const product = createSlice({
         }
       })
       .addCase(GETPRODUCT.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(SEARCHPRODUCT.pending, (state) => {
+        state.error = "";
+      })
+      .addCase(SEARCHPRODUCT.fulfilled, (state, { payload }) => {
+        if (payload.status) {
+          state.products = [...payload?.results];
+        }
+      })
+      .addCase(SEARCHPRODUCT.rejected, (state, { error }) => {
         state.error = error.message;
       });
   },

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BUYPRODUCT, GETORDERS } from "../actions/order";
+import { BUYPRODUCT, GETORDERS, CREATEPAYMENT } from "../actions/order";
 import toast from "react-hot-toast";
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
   orderHistory: [],
   orderSuccess: false,
   error: "",
+  orderObject: null,
 };
 
 const order = createSlice({
@@ -25,10 +26,13 @@ const order = createSlice({
         state.error = "";
       })
       .addCase(BUYPRODUCT.fulfilled, (state, { payload }) => {
+        console.log("---order reducer payload---", payload);
         if (payload.status) {
-          state.orderSuccess = true;
-          state.orders = [...payload?.order?.products];
-          toast.success(payload.message);
+          localStorage.setItem("orderId", payload?.order?._id);
+          state.orderObject = payload.orderResponse;
+          // state.orderSuccess = true;
+          // state.orders = [...payload?.order?.products];
+          // toast.success(payload.message);
         }
       })
       .addCase(BUYPRODUCT.rejected, (state, { error }) => {
@@ -44,6 +48,22 @@ const order = createSlice({
         }
       })
       .addCase(GETORDERS.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(CREATEPAYMENT.pending, (state) => {
+        state.error = "";
+      })
+      .addCase(CREATEPAYMENT.fulfilled, (state, { payload }) => {
+        console.log("---payment reducer payload---", payload);
+        if (payload.status) {
+          // localStorage.setItem("orderId", payload?.order?._id);
+          // state.orderObject = payload.orderResponse;
+          state.orderSuccess = true;
+          // state.orders = [...payload?.order?.products];
+          toast.success(payload.message);
+        }
+      })
+      .addCase(CREATEPAYMENT.rejected, (state, { error }) => {
         state.error = error.message;
       });
   },

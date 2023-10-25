@@ -31,6 +31,7 @@ const OrderSection = () => {
             spin
           />
         ) : (
+          <div className="max-h-[400px] overflow-y-auto mt-10">
           <table className="border-collapse border m-auto mt-5">
             <thead className="bg-sky-300">
               <tr>
@@ -64,7 +65,7 @@ const OrderSection = () => {
                 })
               )}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
     </div>

@@ -37,36 +37,42 @@ const TrendingProduct = () => {
       <SectionHeading text={"Trending Products"} />
       <Search />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-5">
-        {currentItems?.map((item, idx) => {
-          const isIdIncluded = wishlist.some((itm) => itm._id === item._id);
-          const isIdIncludedCart = cart.some((itm) => itm._id === item._id);
-          return (
-            <div
-              key={idx}
-              className="w-full hover:shadow-md hover:shadow-sky-400 hover:bg-white transition duration-300 ease-in-out"
-            >
-              <Card
-                item={item}
-                isWish={isIdIncluded}
-                isCart={isIdIncludedCart}
-              />
-            </div>
-          );
-        })}
+        {currentItems.length < 1 ? (
+          <p className="text-center">Products not found</p>
+        ) : (
+          currentItems?.map((item, idx) => {
+            const isIdIncluded = wishlist.some((itm) => itm._id === item._id);
+            const isIdIncludedCart = cart.some((itm) => itm._id === item._id);
+            return (
+              <div
+                key={idx}
+                className="w-full hover:shadow-md hover:shadow-sky-400 hover:bg-white transition duration-300 ease-in-out"
+              >
+                <Card
+                  item={item}
+                  isWish={isIdIncluded}
+                  isCart={isIdIncludedCart}
+                />
+              </div>
+            );
+          })
+        )}
       </div>
-      <ReactPaginate
-        previousLabel={"<<"}
-        nextLabel={">>"}
-        breakLabel={"..."}
-        breakClassName={"break-me"}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination"}
-        subContainerClassName={"pages pagination"}
-        activeClassName={"active"}
-      />
+      {currentItems.length > 0 && (
+        <ReactPaginate
+          previousLabel={"<<"}
+          nextLabel={">>"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      )}
     </div>
   );
 };

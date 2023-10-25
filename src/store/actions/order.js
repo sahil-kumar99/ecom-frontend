@@ -34,4 +34,33 @@ const GETORDERS = createAsyncThunk("GET_ORDERS", async () => {
     return error;
   }
 });
-export { BUYPRODUCT, GETORDERS };
+
+const CREATEPAYMENT = createAsyncThunk(
+  "CREATE_PAYMENT",
+  async ({
+    order_id,
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+  }) => {
+    try {
+      const config = getAuthorizationConfig();
+      const response = await axios.post(
+        "https://ecom-server-v9a4.onrender.com/payment/createPayment",
+        // "http://localhost:8000/payment/createPayment",
+        {
+          order_id,
+          razorpay_order_id,
+          razorpay_payment_id,
+          razorpay_signature,
+        },
+        config
+      );
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export { BUYPRODUCT, GETORDERS, CREATEPAYMENT };
