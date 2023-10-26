@@ -16,22 +16,24 @@ const OrderSection = () => {
   }, []);
 
   useEffect(() => {
-    setLoader(false);
-  }, [orderData?.orderHistory]);
+    if (orderData?.orderHistory) {
+      setLoader(false);
+    }
+  }, [orderData]);
 
   return (
     <div className="h-screen">
       <SectionHeading text={"Your Orders"} />
       <div className="text-center">
-        {loader ? (
-          <FontAwesomeIcon
-            className="mt-10"
-            icon={faSpinner}
-            color="blue"
-            spin
-          />
-        ) : (
-          <div className="max-h-[400px] overflow-y-auto mt-10">
+        <div className="max-h-[400px] overflow-y-auto mt-10">
+          {loader ? (
+            <FontAwesomeIcon
+              className="mt-10 text-center"
+              icon={faSpinner}
+              color="blue"
+              spin
+            />
+          ) : orderData?.orderHistory.length > 0 ? (
             <table className="border-collapse border m-auto mt-5">
               <thead className="bg-sky-300">
                 <tr>
@@ -83,8 +85,10 @@ const OrderSection = () => {
                 )}
               </tbody>
             </table>
-          </div>
-        )}
+          ) : (
+            "No data available"
+          )}
+        </div>
       </div>
     </div>
   );
