@@ -67,7 +67,7 @@ const OrderSection = () => {
                             rowSpan={order.products.length}
                           >
                             <span
-                              className={`rounded-xl ${
+                              className={`text-sm rounded-xl ${
                                 order.status.toLowerCase() === "success"
                                   ? "bg-green-500"
                                   : "bg-red-500"
