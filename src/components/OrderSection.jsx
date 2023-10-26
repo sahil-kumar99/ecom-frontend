@@ -18,7 +18,7 @@ const OrderSection = () => {
   useEffect(() => {
     setLoader(false);
   }, [orderData?.orderHistory]);
-
+  console.log("----orderDATA---", orderData);
   return (
     <div className="h-screen">
       <SectionHeading text={"Your Orders"} />
@@ -32,40 +32,58 @@ const OrderSection = () => {
           />
         ) : (
           <div className="max-h-[400px] overflow-y-auto mt-10">
-          <table className="border-collapse border m-auto mt-5">
-            <thead className="bg-sky-300">
-              <tr>
-                <th className="border p-2">order Date</th>
-                <th className="border p-2">Product</th>
-                <th className="border p-2">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orderData?.orderHistory.map((order) =>
-                order.products.map((product, idx) => {
-                  const date = new Date(order.orderDate);
-                  const formatedDate = format(date, "MM/dd/yyyy");
-                  return (
-                    <tr key={idx}>
-                      {idx === 0 ? (
-                        <td
-                          className="border p-3"
-                          rowSpan={order.products.length}
-                        >
-                          {formatedDate}
+            <table className="border-collapse border m-auto mt-5">
+              <thead className="bg-sky-300">
+                <tr>
+                  <th className="border p-2">order Date</th>
+                  <th className="border p-2">Product</th>
+                  <th className="border p-2">Price</th>
+                  <th className="border p-2">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderData?.orderHistory.map((order) =>
+                  order.products.map((product, idx) => {
+                    const date = new Date(order.orderDate);
+                    const formatedDate = format(date, "MM/dd/yyyy");
+                    return (
+                      <tr key={idx}>
+                        {idx === 0 ? (
+                          <td
+                            className="border p-3"
+                            rowSpan={order.products.length}
+                          >
+                            {formatedDate}
+                          </td>
+                        ) : null}
+                        <td className="border p-3">{product.title}</td>
+                        <td className="border p-3">
+                          <span className="font-bold">&#8377;</span>&nbsp;
+                          {product.price}
                         </td>
-                      ) : null}
-                      <td className="border p-3">{product.title}</td>
-                      <td className="border p-3">
-                        <span className="font-bold">&#8377;</span>&nbsp;
-                        {product.price}
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table></div>
+                        {idx === 0 ? (
+                          <td
+                            className="border p-3"
+                            rowSpan={order.products.length}
+                          >
+                            <span
+                              className={`rounded-xl ${
+                                order.status.toLowerCase() === "success"
+                                  ? "bg-green-500"
+                                  : "bg-red-500"
+                              }  p-1 font-bold`}
+                            >
+                              {order.status}
+                            </span>
+                          </td>
+                        ) : null}
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

@@ -53,7 +53,7 @@ const OrderTable = () => {
                 order_id: localStorage.getItem("orderId"),
                 razorpay_order_id,
                 razorpay_payment_id,
-                razorpay_signature,
+                order_status: "success",
               })
             );
             // toast.success(
@@ -84,8 +84,19 @@ const OrderTable = () => {
         };
 
         const rzp = new window.Razorpay(options);
+        console.log(rzp, "rzprzp");
         rzp.on("payment.failed", function (response) {
-          toast.error(`Payment failed: ${response.error.description}`);
+          // alert("payment failed");
+          dispatch(
+            CREATEPAYMENT({
+              order_id: localStorage.getItem("orderId"),
+              razorpay_order_id: response?.error?.metadata.order_id,
+              razorpay_payment_id: response?.error?.metadata.payment_id,
+              order_status: "failed",
+            })
+          );
+          rzp.close();
+          toast.error("payment failed");
         });
         rzp.open();
         seting_dsts.current = true;
@@ -98,7 +109,7 @@ const OrderTable = () => {
   }, [orderData]);
 
   useEffect(() => {
-    console.log('---order sucess--');
+    console.log("---order sucess--");
     if (orderData?.orderSuccess) {
       // dispatch(CLEARCART());
       dispatch(CLEARORDER());

@@ -42,6 +42,7 @@ const order = createSlice({
         state.error = "";
       })
       .addCase(GETORDERS.fulfilled, (state, { payload }) => {
+        console.log("---getorders---", payload);
         if (payload.status) {
           state.orderHistory = [...payload?.orders];
           //   toast.success(payload.message);
@@ -54,13 +55,12 @@ const order = createSlice({
         state.error = "";
       })
       .addCase(CREATEPAYMENT.fulfilled, (state, { payload }) => {
-        console.log("---payment reducer payload---", payload);
         if (payload.status) {
+          state.orderSuccess = true;
+          toast.success(payload.message);
           // localStorage.setItem("orderId", payload?.order?._id);
           // state.orderObject = payload.orderResponse;
-          state.orderSuccess = true;
           // state.orders = [...payload?.order?.products];
-          toast.success(payload.message);
         }
       })
       .addCase(CREATEPAYMENT.rejected, (state, { error }) => {
