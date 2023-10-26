@@ -27,11 +27,10 @@ const OrderTable = () => {
   };
 
   useEffect(() => {
-    console.log("---useeffect inside order", orderData?.orderObject);
     if (seting_dsts.current == false) {
       if (orderData?.orderObject) {
         const { user } = JSON.parse(localStorage.getItem("user"));
-        console.log("---useeffect>>>>>>>>>>>>", orderData?.orderObject);
+        // console.log("---useeffect>>>>>>>>>>>>", orderData?.orderObject);
         const options = {
           key: "rzp_test_rcJDOMsASBNgQX",
           amount: orderData?.orderObject?.amount,
@@ -40,7 +39,6 @@ const OrderTable = () => {
           name: "Ecom Corp",
           description: "Test Transaction",
           handler: async (response) => {
-            console.log("---order response---", response);
             const {
               razorpay_order_id,
               razorpay_payment_id,
@@ -84,9 +82,8 @@ const OrderTable = () => {
         };
 
         const rzp = new window.Razorpay(options);
-        console.log(rzp, "rzprzp");
         rzp.on("payment.failed", function (response) {
-          // alert("payment failed");
+          // rzp.close();
           dispatch(
             CREATEPAYMENT({
               order_id: localStorage.getItem("orderId"),
@@ -95,8 +92,8 @@ const OrderTable = () => {
               order_status: "failed",
             })
           );
-          rzp.close();
-          toast.error("payment failed");
+          alert("payment failed, try again");
+          // toast.error("payment failed");
         });
         rzp.open();
         seting_dsts.current = true;
@@ -109,7 +106,6 @@ const OrderTable = () => {
   }, [orderData]);
 
   useEffect(() => {
-    console.log("---order sucess--");
     if (orderData?.orderSuccess) {
       // dispatch(CLEARCART());
       dispatch(CLEARORDER());

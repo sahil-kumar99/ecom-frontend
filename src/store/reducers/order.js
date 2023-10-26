@@ -26,7 +26,6 @@ const order = createSlice({
         state.error = "";
       })
       .addCase(BUYPRODUCT.fulfilled, (state, { payload }) => {
-        console.log("---order reducer payload---", payload);
         if (payload.status) {
           localStorage.setItem("orderId", payload?.order?._id);
           state.orderObject = payload.orderResponse;
@@ -42,7 +41,6 @@ const order = createSlice({
         state.error = "";
       })
       .addCase(GETORDERS.fulfilled, (state, { payload }) => {
-        console.log("---getorders---", payload);
         if (payload.status) {
           state.orderHistory = [...payload?.orders];
           //   toast.success(payload.message);

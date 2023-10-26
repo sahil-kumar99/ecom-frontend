@@ -128,7 +128,6 @@ const user = createSlice({
         state.error = "";
       })
       .addCase(ADDTOCART.fulfilled, (state, { payload }) => {
-        console.log("---add to cart paylad---", payload);
         if (payload.status) {
           state.cart = [...state.cart, payload?.product];
           state.cartSize = state.cart.length;

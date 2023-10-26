@@ -18,7 +18,7 @@ const OrderSection = () => {
   useEffect(() => {
     setLoader(false);
   }, [orderData?.orderHistory]);
-  console.log("----orderDATA---", orderData);
+
   return (
     <div className="h-screen">
       <SectionHeading text={"Your Orders"} />
